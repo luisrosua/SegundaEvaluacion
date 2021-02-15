@@ -23,4 +23,15 @@ public class DBEmail extends Database{
 		}
 		return u;
 	}
+	
+	public boolean newUser(String name, String pass) throws Exception{
+		String sql = "INSERT INTO usuarios(usuario, pass) VALUES ('"+name+"','"+pass+"')";
+		try {
+			this.stm.executeUpdate(sql);
+			return true;
+		}
+		catch(Exception ex){
+			return false;
+		}
+	}
 }
