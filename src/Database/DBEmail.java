@@ -32,6 +32,6 @@ public class DBEmail extends Database{
 		}
 		catch(Exception ex){
 			return false;
-		}
+		} //a
 	}
 }

@@ -13,7 +13,7 @@ public class TestDatabase {
 			
 			//System.out.println("You are connected to EMAIL");
 			
-			User user;
+			User user; //a
 			
 			int op;
 			

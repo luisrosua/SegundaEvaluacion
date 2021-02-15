@@ -23,5 +23,6 @@ public class Database {
 		this.pass = pass;
 		con = DriverManager.getConnection(url, user, pass);
 	}
+	//a
 }
 	
