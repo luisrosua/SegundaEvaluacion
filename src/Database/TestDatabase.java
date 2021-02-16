@@ -1,7 +1,9 @@
 package Database;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import Otro.Message;
 import Otro.User;
 
 public class TestDatabase {
@@ -92,7 +94,48 @@ public class TestDatabase {
 	}
 	
 	public static void insideSystem(DBEmail db, User user) throws Exception{
-		System.out.println("Welcome "+user);
+		System.out.println("Welcome ");
+		
+		int op = 0;
+		do {
+			op = loggedMenu();
+			switch(op) {
+			case 1:
+				ArrayList<Message> m = db.getMessages(user);
+				printMessages(m); break;
+			case 2:sendAMessage(user, db); break;
+			}
+		}while(op > 3);
+	}
+	
+	public static String printMessages(ArrayList<Message> m) {
+		String report = "";
+		for(int i = 0; i < m.size(); i++) {
+			report += m.get(i).toString()+"\n";
+		}
+		return report;
+	}
+	
+	public static int loggedMenu() {
+		Scanner input = new Scanner(System.in);
+		int op;
+		System.out.println("1. View messages");
+		System.out.println("2. Send a message");
+		
+		op = input.nextInt();
+		return op;
+	}
+	
+	public static void sendAMessage(User u, DBEmail db) throws Exception{
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("Enter the id of the adressee: ");
+		int destiny = input.nextInt();
+		System.out.println("Write the message: ");
+		String text = input.next();
+		
+		Message m = new Message(text, u.getId(), destiny, true);
+		db.sendMessage(m);
 	}
 
 }

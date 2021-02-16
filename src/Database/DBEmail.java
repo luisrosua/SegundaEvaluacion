@@ -2,6 +2,9 @@ package Database;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+
+import Otro.Message;
 import Otro.User;
 
 public class DBEmail extends Database{
@@ -32,6 +35,25 @@ public class DBEmail extends Database{
 		}
 		catch(Exception ex){
 			return false;
-		} //a
+		} 
+	}
+	
+	public ArrayList<Message> getMessages(User u) throws Exception{
+		ArrayList<Message> m = new ArrayList<Message>();
+		Message me = null;
+		String sql = "SELECT * FROM mensajes WHERE id_destino = '"+u.getId()+"'";
+		
+		ResultSet result = this.stm.executeQuery(sql);
+		while(result.next()) {
+			me = new Message(result.getString("texto"), result.getInt("id_remite"), result.getInt("id_destino"), result.getBoolean("nuevo"));
+			m.add(me);
+		}
+		
+		return m;
+	}
+	
+	public void sendMessage(Message m) throws Exception{
+		String sql = "INSERT INTO mensajes(texto, id_remite, id_destino, nuevo) VALUES ('"+m.getText()+"', '"+m.getIdRemite()+"', '"+m.getIdDestino()+"',1)";
+		this.stm.executeUpdate(sql);
 	}
 }
